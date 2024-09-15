@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+    <h2>Book or UnBook  Rooms</h2>
+
+    <% if (room.length > 0) { %>
+        <ul class="list-group">
+            <% room.forEach(rooms => { %>
+                <li class="list-group-item">
+                    <h4>Room Number: <%= rooms.roomNumber %></h4>
+
+                    <!-- Show 'Already Booked' if room is booked -->
+                    <% if (typeof user !== 'undefined' && rooms.isBook && rooms.studentId && rooms.studentId.toString() === user._id.toString()) { %>
+                        <form action="/student/rooms/unbook" method="POST">
+                            <input type="hidden" name="roomNumber" value="<%= rooms.roomNumber %>">
+                            <button type="submit" class="btn btn-warning">Unbook Room</button>
+                        </form>
+                    <% } else if (rooms.isBook) { %>
+                        <button class="btn btn-danger" disabled>Already Booked</button>
+                    <% } else { %>
+                        <!-- Form to book a room -->
+                        <form action="/student/rooms" method="POST">
+                            <input type="hidden" name="roomNumber" value="<%= rooms.roomNumber %>">
+                            <button type="submit" class="btn btn-primary">Book Room</button>
+                        </form>
+                    <% } %>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No rooms available at the moment.</p>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>

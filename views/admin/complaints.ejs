@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Student Complaints</h2>
+
+    <!-- Check if there are complaints -->
+    <% if (complaints.length > 0) { %>
+        <div class="row">
+            <% complaints.forEach(function(complaint) { %>
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-<%= complaint.status == 'Pending' ? 'warning' : 'success' %>">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <strong>Complaint by: <%= complaint.studentId.name %></strong>
+                            </h5>
+                            <p class="card-text">
+                                <strong>Type:</strong> <%= complaint.complaintType %> <br>
+                                <strong>Description:</strong> <%= complaint.description %> <br>
+                                <strong>Status:</strong> 
+                                <% if (complaint.status == 'Pending' || complaint.status == 'pending') { %>
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                <% } else { %>
+                                    <span class="badge bg-success">Solved</span>
+                                <% } %>
+                            </p>
+
+                            <!-- Solve button only if pending -->
+                            <% if (complaint.status == 'Pending' || complaint.status == 'pending') { %>
+                                <form action="/admin/solve-complaint/<%= complaint._id %>" method="post">
+                                    <button type="submit" class="btn btn-outline-success w-100">
+                                        <i class="fas fa-check-circle"></i> Mark as Solved
+                                    </button>
+                                </form>
+                            <% } else { %>
+                                <span class="text-success">
+                                    <!-- <i class="fas fa-check-circle"></i> This complaint has been resolved. -->
+                                </span>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <div class="alert alert-info text-center">
+            No complaints available at the moment.
+        </div>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>

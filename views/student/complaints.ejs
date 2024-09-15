@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+    <h2>My Complaints</h2>
+    <form action="/student/complaints" method="POST">
+        <div class="form-group">
+            <label for="complaintType">Complaint Type:</label>
+            <input type="text" class="form-control" id="complaintType" name="complaintType" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" name="description" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Complaint</button>
+    </form>
+
+    <h3>My Complaint List</h3>
+    <ul>
+        <% complaints.forEach(function(complaint) { %>
+            <li>
+                <%= complaint.complaintType %> - <%= complaint.description %> - <%= complaint.status %>
+            </li>
+        <% }); %>
+    </ul>
+</div>
+
+<%- include('../partials/footer') %>

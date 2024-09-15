@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Room Assignments</h2>
+
+    <!-- Check if there are rooms -->
+    <% if (rooms.length > 0) { %>
+        <div class="row">
+            <% rooms.forEach(function(room) { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Room <strong>#<%= room.roomNumber %></strong>
+                            </h5>
+
+                            <!-- Show room assignment status -->
+                            <p class="card-text">
+                                <% if (room.studentId) { %>
+                                    <span class="badge bg-success">Assigned</span> <br>
+                                    <strong>Assigned to:</strong> <b style="color: blue;"><%= room.studentId.name %></b>
+                                <% } else { %>
+                                    <span class="badge bg-danger">Not Assigned</span> <br>
+                                    
+                                <% } %>
+                            </p>
+
+                           
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <div class="alert alert-info text-center">
+            No rooms available at the moment.
+        </div>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>
